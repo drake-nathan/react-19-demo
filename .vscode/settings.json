@@ -1,0 +1,13 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "eslint.runtime": "node",
+  "explorer.fileNesting.enabled": true,
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "tailwindCSS.classFunctions": ["cn", "cva"]
+}

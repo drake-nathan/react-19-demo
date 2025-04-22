@@ -10,12 +10,18 @@
     "format:check": "prettier . --check --cache",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "prettify": "npm run format && npm run lint:fix",
     "start": "next start"
   },
   "dependencies": {
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.503.0",
     "next": "15.3.1",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "tailwind-merge": "^3.2.0",
+    "tw-animate-css": "^1.2.8"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.4",
@@ -25,5 +31,6 @@
     "js-style-kit": "^0.3.0",
     "tailwindcss": "^4.1.4",
     "typescript": "^5.8.3"
-  }
+  },
+  "packageManager": "pnpm@10.9.0+sha512.0486e394640d3c1fb3c9d43d49cf92879ff74f8516959c235308f5a8f62e2e19528a65cdc2a3058f587cde71eba3d5b56327c8c33a97e4c4051ca48a10ca2d5f"
 }
