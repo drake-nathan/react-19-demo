@@ -6,8 +6,8 @@ import type { Cart, Product } from "./types";
 const serverCart: Cart = { items: [] };
 
 // Add item to cart
-export const addToCart = async (product: Product): Promise<void> => {
-  // Simulate network delay
+export const addToCart = async (product: Product): Promise<Cart> => {
+  // Simulate network delay - longer delay to clearly demonstrate optimistic UI
   await new Promise((resolve) => {
     setTimeout(resolve, 1000);
   });
@@ -22,6 +22,9 @@ export const addToCart = async (product: Product): Promise<void> => {
       quantity: 1,
     });
   }
+
+  // Return the updated cart
+  return { items: [...serverCart.items] };
 };
 
 // Get cart contents
@@ -38,7 +41,7 @@ export const getCart = async (): Promise<Cart> => {
 export const updateCartItemQuantity = async (
   id: string,
   quantity: number,
-): Promise<void> => {
+): Promise<Cart> => {
   // Simulate network delay
   await new Promise((resolve) => {
     setTimeout(resolve, 800);
@@ -49,14 +52,20 @@ export const updateCartItemQuantity = async (
   if (item) {
     item.quantity = quantity;
   }
+
+  // Return the updated cart
+  return { items: [...serverCart.items] };
 };
 
 // Remove item from cart
-export const removeFromCart = async (id: string): Promise<void> => {
+export const removeFromCart = async (id: string): Promise<Cart> => {
   // Simulate network delay
   await new Promise((resolve) => {
     setTimeout(resolve, 800);
   });
 
   serverCart.items = serverCart.items.filter((item) => item.id !== id);
+
+  // Return the updated cart
+  return { items: [...serverCart.items] };
 };

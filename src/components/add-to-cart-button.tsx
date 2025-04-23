@@ -1,7 +1,6 @@
 "use client";
 
-import { Check, ShoppingCart } from "lucide-react";
-import { useOptimistic } from "react";
+import { ShoppingCart } from "lucide-react";
 import { toast } from "sonner";
 
 import type { Product } from "@/lib/types";
@@ -15,50 +14,36 @@ interface AddToCartButtonProps {
 }
 
 export const AddToCartButton = ({ product }: AddToCartButtonProps) => {
-  const addItemToCart = useCartStore((state) => state.addItem);
-
-  // Track optimistic state for the button
-  const [optimisticAdding, addOptimistically] = useOptimistic(
-    false,
-    (state, adding) => adding,
-  );
+  const setCartItems = useCartStore((state) => state.setItems);
 
   const handleAddToCart = async () => {
-    // Set optimistic state to true
-    addOptimistically(true);
-
     try {
-      // Simulate server action with delay
-      await addToCart(product);
+      console.info("Adding to cart:", product);
 
-      // Update local cart state
-      addItemToCart(product);
+      // Call server action with delay and get updated cart
+      const updatedCart = await addToCart(product);
+      console.info("Server response:", updatedCart);
+
+      // Update local cart state with the server response
+      setCartItems(updatedCart.items);
+      console.info("Cart items updated with:", updatedCart.items);
 
       toast(`${product.name} has been added to your cart.`);
-    } catch {
+    } catch (error) {
+      console.error("Error adding to cart:", error);
       toast("Failed to add item to cart. Please try again.");
-    } finally {
-      // Reset optimistic state
-      addOptimistically(false);
     }
   };
 
   return (
     <Button
       className="relative"
-      disabled={optimisticAdding}
-      onClick={void handleAddToCart}
+      onClick={() => {
+        void handleAddToCart();
+      }}
     >
-      {optimisticAdding ?
-        <>
-          <Check className="mr-2 h-4 w-4" />
-          Adding...
-        </>
-      : <>
-          <ShoppingCart className="mr-2 h-4 w-4" />
-          Add to Cart
-        </>
-      }
+      <ShoppingCart className="mr-2 h-4 w-4" />
+      Add to Cart
     </Button>
   );
 };
