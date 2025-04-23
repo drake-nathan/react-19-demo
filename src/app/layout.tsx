@@ -2,7 +2,11 @@ import type { Metadata } from "next";
 
 import { Geist, Geist_Mono } from "next/font/google";
 
-import "./globals.css";
+import "@/styles/globals.css";
+
+import Link from "next/link";
+
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   subsets: ["latin"],
@@ -29,7 +33,36 @@ const RootLayout = ({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <main className="bg-background min-h-screen">
+          <nav className="border-b">
+            <div className="container mx-auto flex items-center justify-between px-4 py-4">
+              <Link className="text-xl font-bold" href="/">
+                React 19 Shop
+              </Link>
+              <a className="flex items-center" href="/cart">
+                <svg
+                  className="mr-2"
+                  fill="none"
+                  height="24"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle cx="8" cy="21" r="1" />
+                  <circle cx="19" cy="21" r="1" />
+                  <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+                </svg>
+                Cart
+              </a>
+            </div>
+          </nav>
+          {children}
+          <Toaster />
+        </main>
       </body>
     </html>
   );
