@@ -2,8 +2,22 @@
 
 import type { Cart, Product } from "./types";
 
-// Simulate server-side cart storage
+// Server-side in-memory cart storage
+// This ensures the cart persists between server actions
 const serverCart: Cart = { items: [] };
+
+// Get cart contents
+export const getCart = async (): Promise<Cart> => {
+  // Simulate network delay
+  await new Promise((resolve) => {
+    setTimeout(resolve, 500);
+  });
+
+  // Return a deep copy of the cart to prevent direct mutations
+  return { 
+    items: serverCart.items.map(item => ({ ...item })) 
+  };
+};
 
 // Add item to cart
 export const addToCart = async (product: Product): Promise<Cart> => {
@@ -23,18 +37,10 @@ export const addToCart = async (product: Product): Promise<Cart> => {
     });
   }
 
-  // Return the updated cart
-  return { items: [...serverCart.items] };
-};
-
-// Get cart contents
-export const getCart = async (): Promise<Cart> => {
-  // Simulate network delay
-  await new Promise((resolve) => {
-    setTimeout(resolve, 500);
-  });
-
-  return serverCart;
+  // Return a deep copy of the updated cart
+  return { 
+    items: serverCart.items.map(item => ({ ...item })) 
+  };
 };
 
 // Update cart item quantity
@@ -53,8 +59,10 @@ export const updateCartItemQuantity = async (
     item.quantity = quantity;
   }
 
-  // Return the updated cart
-  return { items: [...serverCart.items] };
+  // Return a deep copy of the updated cart
+  return { 
+    items: serverCart.items.map(item => ({ ...item })) 
+  };
 };
 
 // Remove item from cart
@@ -66,6 +74,8 @@ export const removeFromCart = async (id: string): Promise<Cart> => {
 
   serverCart.items = serverCart.items.filter((item) => item.id !== id);
 
-  // Return the updated cart
-  return { items: [...serverCart.items] };
+  // Return a deep copy of the updated cart
+  return { 
+    items: serverCart.items.map(item => ({ ...item })) 
+  };
 };
